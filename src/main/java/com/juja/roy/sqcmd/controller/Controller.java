@@ -19,12 +19,12 @@ public class Controller {
     private static String sqlQuery;
     private static Collection<Collection<String>> tableData = new ArrayList<>();
 
-    public static int run(String userCommand){
+    public static RunState run(String userCommand){
         if(userCommand == null){
-            return 0;
+            return RunState.EmptyCommand;
         }
         if(userCommand.equalsIgnoreCase("exit")) {
-            return -1;
+            return RunState.Exit;
         }
 
         String[] tmpArrUserCommand = userCommand.split("\\|");
@@ -78,6 +78,6 @@ public class Controller {
                 toConsole("Неизвестная команда.");
         }
 
-        return 1;
+        return RunState.Success;
     }
 }

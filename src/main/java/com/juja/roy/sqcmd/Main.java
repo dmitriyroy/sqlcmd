@@ -1,6 +1,7 @@
 package com.juja.roy.sqcmd;
 
 import com.juja.roy.sqcmd.controller.Controller;
+import com.juja.roy.sqcmd.controller.RunState;
 import com.juja.roy.sqcmd.view.Reader;
 
 import static com.juja.roy.sqcmd.view.Writer.toConsole;
@@ -14,11 +15,11 @@ public class Main {
         toConsole(WELCOME_MASSAGE);
         while(true) {
             toConsole(REQUEST_COMMAND);
-            int stateController = Controller.run(Reader.readConsole());
+            RunState runState = Controller.run(Reader.readConsole());
 
-            if(stateController <= 0){
+            if(runState.equals(RunState.Exit)){
                 toConsole(BY_MESSAGE);
-                System.exit(stateController);
+                break;
             }
         }
     }
