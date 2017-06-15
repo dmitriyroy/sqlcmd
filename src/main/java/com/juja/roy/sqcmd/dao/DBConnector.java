@@ -1,20 +1,22 @@
 package com.juja.roy.sqcmd.dao;
 
+import com.juja.roy.sqcmd.exception.ConnectionFailedException;
+import com.juja.roy.sqcmd.exception.DriverLoadException;
+import com.juja.roy.sqcmd.view.ConsoleWriter;
+import com.juja.roy.sqcmd.view.Writer;
+
 import java.sql.*;
-
-import static com.juja.roy.sqcmd.view.Writer.toConsole;
-
 public class DBConnector {
 
     private Connection connection;
-//    private static Statement prepareStatement;
-//    private static ResultSet rs;
     // | database | username | password
     private String database;
     private String username;
     private String password;
+    private Writer writer;
 
     public DBConnector(String database, String username, String password){
+        writer = new ConsoleWriter();
         this.database = database;
         this.username = username;
         this.password = password;
@@ -44,36 +46,27 @@ public class DBConnector {
         }
     }
 
-    public void mysqlConnect(){
+    public void mysqlConnect() throws DriverLoadException, ConnectionFailedException {
         ////////////////////////////////////////////////////////////////////////////////////
-//        toConsole("-------- MySQL JDBC Connection Testing ------------");
+//        write("-------- MySQL JDBC Connection Testing ------------");
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            toConsole("Where is your MySQL JDBC Driver?");
-            e.printStackTrace();
-            return;
+            throw new DriverLoadException("Where is your MySQL JDBC Driver?");
         }
-
-//        toConsole("MySQL JDBC Driver Registered!");
 
         try {
             connection = DriverManager
 //                    .getConnection("jdbc:mysql://localhost:3306/sqlcmd","root", "");
                     .getConnection("jdbc:mysql://localhost:3306/" + this.database, this.username, this.password);
-            toConsole("Database connection SUCCESS.");
 
         } catch (SQLException e) {
-            toConsole("Connection Failed! Check output console");
-            e.printStackTrace();
-            return;
+            throw new ConnectionFailedException("Connection Failed! Check output console.");
         }
 
-        if (connection != null) {
-//            toConsole("You made it, take control your database now!");
-        } else {
-            toConsole("Failed to make connection!");
+        if (connection == null) {
+            throw new ConnectionFailedException("Failed to make connection!");
         }
         /////////////////////////////////////////////////////////////
     }

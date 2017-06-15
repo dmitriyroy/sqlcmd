@@ -4,12 +4,13 @@ import com.juja.roy.sqcmd.commands.Find;
 import com.juja.roy.sqcmd.commands.Help;
 import com.juja.roy.sqcmd.commands.Tables;
 import com.juja.roy.sqcmd.dao.DBConnector;
+import com.juja.roy.sqcmd.exception.ConnectionFailedException;
+import com.juja.roy.sqcmd.exception.DriverLoadException;
+import com.juja.roy.sqcmd.view.Writer;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import static com.juja.roy.sqcmd.view.Writer.toConsole;
 
 public class Controller {
 
@@ -18,8 +19,14 @@ public class Controller {
     private static ResultSet rs;
     private static String sqlQuery;
     private static Collection<Collection<String>> tableData = new ArrayList<>();
+    private final Writer writer;
 
-    public static RunState run(String userCommand){
+    public Controller(Writer writer) {
+        this.writer = writer;
+    }
+
+
+    public RunState run(String userCommand) throws DriverLoadException, ConnectionFailedException {
         if(userCommand == null){
             return RunState.EmptyCommand;
         }
@@ -39,43 +46,44 @@ public class Controller {
 
         switch(arrUserCommand[0].toUpperCase()){
             case "HELP":
-                toConsole(Help.getHelpInfo());
+                writer.write(Help.getHelpInfo());
                 break;
             case "CONNECT":
                   dbConnector = new DBConnector("sqlcmd","root","");
 //                dbConnector = new DBConnector(arrUserCommand[1],arrUserCommand[2],arrUserCommand[3]);
                 dbConnector.mysqlConnect();
+                writer.write("Database connection SUCCESS.");
                 break;
             case "CREATE":
-                toConsole("Команда " + userCommand + " еще не реализована.");
+                writer.write("Команда " + userCommand + " еще не реализована.");
                 break;
             case "TABLES":
-                toConsole(new Tables(dbConnector).getTables());
+                writer.write(new Tables(dbConnector).getTables());
                 break;
             case "CLEAR":
-                toConsole("Команда " + userCommand + " еще не реализована.");
+                writer.write("Команда " + userCommand + " еще не реализована.");
                 break;
             case "DROP":
-                toConsole("Команда " + userCommand + " еще не реализована.");
+                writer.write("Команда " + userCommand + " еще не реализована.");
                 break;
             case "FIND":
                 if(arrUserCommand[1] == null || arrUserCommand[1].length() == 0){
-                    toConsole("Не введена таблица.");
+                    writer.write("Не введена таблица.");
                 }
-                toConsole(new Find(dbConnector,arrUserCommand[1]).getTableData());
+                writer.write(new Find(dbConnector,arrUserCommand[1]).getTableData());
                 break;
             case "INSERT":
-                toConsole("Команда " + userCommand + " еще не реализована.");
+                writer.write("Команда " + userCommand + " еще не реализована.");
                 break;
             case "UPDATE":
-                toConsole("Команда " + userCommand + " еще не реализована.");
+                writer.write("Команда " + userCommand + " еще не реализована.");
                 break;
             case "DELETE":
-                toConsole("Команда " + userCommand + " еще не реализована.");
+                writer.write("Команда " + userCommand + " еще не реализована.");
                 break;
 
             default:
-                toConsole("Неизвестная команда.");
+                writer.write("Неизвестная команда.");
         }
 
         return RunState.Success;
