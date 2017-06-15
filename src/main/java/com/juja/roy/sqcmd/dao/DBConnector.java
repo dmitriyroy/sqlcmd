@@ -15,26 +15,16 @@ public class DBConnector {
     private String password;
     private Writer writer;
 
-    public DBConnector(String database, String username, String password){
+    public DBConnector(String database, String username, String password) throws Exception {
         writer = new ConsoleWriter();
         this.database = database;
         this.username = username;
         this.password = password;
         if(database == null){
-            try {
-                throw new Exception("Невалидное имя базы данных");
-            } catch (Exception e) {
-                e.printStackTrace();
-                return;
-            }
+            throw new Exception("Невалидное имя базы данных");
         }
         if(username == null){
-            try {
-                throw new Exception("Невалидное имя пользователя");
-            } catch (Exception e) {
-                e.printStackTrace();
-                return;
-            }
+            throw new Exception("Невалидное имя пользователя");
         }
         if(password == null){
             this.password = "";

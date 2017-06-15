@@ -26,7 +26,7 @@ public class Controller {
     }
 
 
-    public RunState run(String userCommand) throws DriverLoadException, ConnectionFailedException {
+    public RunState run(String userCommand) throws DriverLoadException, ConnectionFailedException, Exception {
         if(userCommand == null){
             return RunState.EmptyCommand;
         }
