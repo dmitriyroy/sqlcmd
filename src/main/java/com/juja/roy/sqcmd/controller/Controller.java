@@ -10,6 +10,7 @@ import com.juja.roy.sqcmd.view.Writer;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 public class Controller {
@@ -35,22 +36,17 @@ public class Controller {
         }
 
         String[] tmpArrUserCommand = userCommand.split("\\|");
-        String[] arrUserCommand = new String[4];
-        for(int i = 0; i < 4; i++){
-            if(tmpArrUserCommand.length < i+1){
-                arrUserCommand[i] = null;
-            }else{
-                arrUserCommand[i] = tmpArrUserCommand[i];
-            }
-        }
+        String[] commandParams = Arrays.copyOfRange(tmpArrUserCommand, 1, tmpArrUserCommand.length);
+        String command = tmpArrUserCommand[0].toUpperCase();
 
-        switch(arrUserCommand[0].toUpperCase()){
+        //todo - проверять наличие коннекта к базе
+        switch(command){
             case "HELP":
-                writer.write(Help.getHelpInfo());
+                writer.write(new Help().getHelpInfo());
                 break;
             case "CONNECT":
-                  dbConnector = new DBConnector("sqlcmd","root","");
-//                dbConnector = new DBConnector(arrUserCommand[1],arrUserCommand[2],arrUserCommand[3]);
+                dbConnector = new DBConnector("sqlcmd","root","");
+//                dbConnector = new DBConnector(commandParams[0],commandParams[1],commandParams[2]);
                 dbConnector.mysqlConnect();
                 writer.write("Database connection SUCCESS.");
                 break;
@@ -67,10 +63,10 @@ public class Controller {
                 writer.write("Команда " + userCommand + " еще не реализована.");
                 break;
             case "FIND":
-                if(arrUserCommand[1] == null || arrUserCommand[1].length() == 0){
+                if(commandParams == null || commandParams.length == 0){
                     writer.write("Не введена таблица.");
                 }
-                writer.write(new Find(dbConnector,arrUserCommand[1]).getTableData());
+                writer.write(new Find(dbConnector,commandParams[0]).getTableData());
                 break;
             case "INSERT":
                 writer.write("Команда " + userCommand + " еще не реализована.");

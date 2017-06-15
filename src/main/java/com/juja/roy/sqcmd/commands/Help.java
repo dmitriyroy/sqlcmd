@@ -1,7 +1,7 @@
 package com.juja.roy.sqcmd.commands;
 
 public class Help {
-    private static String helpInfo = "Список доступных комманд:\n" +
+    private final String HELP_INFO = "Список доступных комманд:\n" +
                 "сonnect    \n" +
                 "\tКоманда для подключения к соответствующей БД\n" +
                 "\t\tФормат команды: connect | database | username | password\n" +
@@ -82,15 +82,8 @@ public class Help {
                 "\t\tФормат: exit (без параметров)\n" +
                 "\t\tФормат вывода: текстовое сообщение с результатом выполнения операции\n";
 
-    public Help(String helpInfo) {
-        this.helpInfo = helpInfo;
-    }
 
-    public static String getHelpInfo() {
-        return helpInfo;
-    }
-
-    public void setHelpInfo(String helpInfo) {
-        this.helpInfo = helpInfo;
+    public String getHelpInfo() {
+        return HELP_INFO;
     }
 }
