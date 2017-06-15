@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class Writer {
-    private static StringBuilder sb = new StringBuilder();
+public class Writer implements WriterInterface {
 
-    public static void toConsole(String string){
+    @Override
+    public void toConsole(String string){
         System.out.println(string);
     }
 
-    public static void toConsole(List<String> tables){
+    @Override
+    public void toConsole(List<String> tables){
+
+        StringBuilder sb = new StringBuilder();
         if(tables == null || tables.size() == 0){
             System.out.println("Empty list.");
             return;
@@ -59,7 +62,10 @@ public class Writer {
         System.out.println(sb.toString());
     }
 
-    public static void toConsole(Collection<Collection<String>> tableData) {
+    @Override
+    public void toConsole(Collection<Collection<String>> tableData) {
+
+        StringBuilder sb = new StringBuilder();
         if(tableData == null || tableData.isEmpty() || tableData.size() == 0){
             System.out.println("Empty tableData.");
             return;

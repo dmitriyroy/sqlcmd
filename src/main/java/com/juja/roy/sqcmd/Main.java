@@ -18,9 +18,9 @@ public class Main {
             RunState runState = Controller.run(Reader.readConsole());
 
             if(runState.equals(RunState.Exit)){
-                toConsole(BY_MESSAGE);
                 break;
             }
         }
+        toConsole(BY_MESSAGE);
     }
 }
