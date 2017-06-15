@@ -4,12 +4,10 @@ import com.juja.roy.sqcmd.commands.Find;
 import com.juja.roy.sqcmd.commands.Help;
 import com.juja.roy.sqcmd.commands.Tables;
 import com.juja.roy.sqcmd.dao.DBConnector;
-import com.juja.roy.sqcmd.view.Writer;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import static com.juja.roy.sqcmd.view.Writer.toConsole;
 
