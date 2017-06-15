@@ -9,9 +9,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * Created by dmitriyroy on 05.06.2017.
- */
 public class Tables {
     private DBConnector dbConnector;
     private String sqlQuery;
