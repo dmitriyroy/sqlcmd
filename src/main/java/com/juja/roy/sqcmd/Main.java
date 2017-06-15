@@ -14,7 +14,7 @@ public class Main {
     private static final String REQUEST_COMMAND = "Введите необходимую команду. Для справки введите help. Для выхода введите exit.";
     private static final String BY_MESSAGE = "Приходите еще =).";
 
-    public static void main(String[] args) throws DriverLoadException, ConnectionFailedException {
+    public static void main(String[] args) throws DriverLoadException, ConnectionFailedException, Exception {
         Writer writer = new ConsoleWriter();
         Reader reader = new ConsoleReader();
         Controller controller = new Controller(writer);
