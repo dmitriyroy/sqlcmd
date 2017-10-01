@@ -45,7 +45,8 @@ public class Controller {
                 writer.write(new Help().getHelpInfo());
                 break;
             case "CONNECT":
-                dbConnector = new DBConnector("sqlcmd","root","");
+//                dbConnector = new DBConnector("sqlcmd","root","");
+                dbConnector = new DBConnector("test_database","root","");
 //                dbConnector = new DBConnector(commandParams[0],commandParams[1],commandParams[2]);
                 dbConnector.mysqlConnect();
                 writer.write("Database connection SUCCESS.");
