@@ -7,17 +7,18 @@ import java.util.List;
 public class ConsoleWriter implements Writer {
 
     @Override
-    public void write(String string){
+    public String write(String string){
         System.out.println(string);
+        return string;
     }
 
     @Override
-    public void write(List<String> tables){
+    public String write(List<String> tables){
 
         StringBuilder sb = new StringBuilder();
         if(tables == null || tables.size() == 0){
             System.out.println("Empty list.");
-            return;
+            return "Empty list.";
         }
         int length = 0;
         for (String s:tables) {
@@ -33,9 +34,7 @@ public class ConsoleWriter implements Writer {
         sb.append("\n");
         sb.append("+ ");
         sb.append(tables.get(0));
-        for(int i=tables.get(0).length(); i<length; i++){
-            sb.append(" ");
-        }
+        for(int i=tables.get(0).length(); i<length; i++) {sb.append(" ");};
         sb.append(" +");
         sb.append("\n");
         sb.append("+-");
@@ -60,15 +59,16 @@ public class ConsoleWriter implements Writer {
         }
         sb.append("-+");
         System.out.println(sb.toString());
+        return sb.toString();
     }
 
     @Override
-    public void write(Collection<Collection<String>> tableData) {
+    public String write(Collection<Collection<String>> tableData) {
 
         StringBuilder sb = new StringBuilder();
         if(tableData == null || tableData.isEmpty() || tableData.size() == 0){
             System.out.println("Empty tableData.");
-            return;
+            return "Empty tableData.";
         }
         List<List<String>> rowsList = (ArrayList)tableData;
         Integer[] rowsLength = new Integer[rowsList.get(0).size()];
@@ -126,5 +126,6 @@ public class ConsoleWriter implements Writer {
 
 
         System.out.println(sb.toString());
+        return sb.toString();
     }
 }

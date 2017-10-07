@@ -4,9 +4,9 @@ import java.util.Collection;
 import java.util.List;
 
 public interface Writer {
-    void write(String string);
+    String write(String string);
 
-    void write(List<String> tables);
+    String write(List<String> tables);
 
-    void write(Collection<Collection<String>> tableData);
+    String write(Collection<Collection<String>> tableData);
 }
