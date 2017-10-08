@@ -23,7 +23,6 @@ public class ConfigurableInputStream extends InputStream{
             this.line = line;
         }else{
             this.line += "\n" + line;
-//            this.line += line;
         }
     }
 }
