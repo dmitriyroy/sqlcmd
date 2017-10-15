@@ -12,6 +12,7 @@ import com.juja.roy.sqcmd.view.Writer;
 public class Main {
     private static final String WELCOME_MASSAGE = "Приветствую в SQL-клиенте, написанном по программе обучения на Juja.";
     private static final String REQUEST_COMMAND = "Введите необходимую команду. Для справки введите help. Для выхода введите exit.";
+    private static final String NEED_CONNECT = "Вам необходимо подключиться к базе. Формат команды: connect | database | username | password";
     private static final String BY_MESSAGE = "Приходите еще =).";
 
     public static void main(String[] args) throws DriverLoadException, ConnectionFailedException {
@@ -19,16 +20,25 @@ public class Main {
         Reader reader = new ConsoleReader();
         Controller controller = new Controller(writer);
         writer.write(WELCOME_MASSAGE);
+        RunState runState = null;
+        int extraeXIT = 0;
         while(true) {
-            writer.write(REQUEST_COMMAND);
-            RunState runState = null;
             try {
-                runState = controller.run(reader.read());
+                do {
+                    writer.write(REQUEST_COMMAND);
+                    runState = controller.run(reader.read());
+                } while (runState.toString().equals("EmptyCommand"));
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            if(runState != null || runState.equals(RunState.Exit)){
+            if(runState != null){
+                if(runState.equals(RunState.Exit)) {
+                    break;
+                }
+//                writer.write(NEED_CONNECT);
+            }
+            if(extraeXIT++ > 5){
                 break;
             }
         }
