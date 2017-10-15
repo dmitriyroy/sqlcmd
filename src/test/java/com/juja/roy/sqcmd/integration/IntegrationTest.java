@@ -26,7 +26,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testExit() throws DriverLoadException, Exception, ConnectionFailedException {
+    public void testHelp() throws DriverLoadException, Exception, ConnectionFailedException {
         // given
         in.add("help");
         in.add("exit");
@@ -118,6 +118,63 @@ public class IntegrationTest {
                 "\t\tФормат: exit (без параметров)\n" +
                 "\t\tФормат вывода: текстовое сообщение с результатом выполнения операции\n" +
                 "\r\n" +
+                "Введите необходимую команду. Для справки введите help. Для выхода введите exit.\r\n" +
+                "Приходите еще =).\r\n", getData());
+    }
+
+    @Test
+    public void testFindWithoutTableName() throws DriverLoadException, Exception, ConnectionFailedException {
+        // given
+        in.add("connect");
+        in.add("find");
+        in.add("exit");
+
+        // when
+        Main.main(new String[0]);
+
+        // then
+        assertEquals("Приветствую в SQL-клиенте, написанном по программе обучения на Juja.\r\n" +
+                "Введите необходимую команду. Для справки введите help. Для выхода введите exit.\r\n" +
+                "Database connection SUCCESS.\r\n" +
+                "Введите необходимую команду. Для справки введите help. Для выхода введите exit.\r\n" +
+                "Не введена таблица.\r\n" +
+                "Введите необходимую команду. Для справки введите help. Для выхода введите exit.\r\n" +
+//                "\r\n" +
+                "Приходите еще =).\r\n", getData());
+    }
+
+    @Test
+    public void testFindWithTableName() throws DriverLoadException, Exception, ConnectionFailedException {
+        // given
+        in.add("connect");
+        in.add("find|user");
+        in.add("exit");
+
+        // when
+        Main.main(new String[0]);
+
+        // then
+        assertEquals("Приветствую в SQL-клиенте, написанном по программе обучения на Juja.\r\n" +
+                "Введите необходимую команду. Для справки введите help. Для выхода введите exit.\r\n" +
+                "Database connection SUCCESS.\r\n" +
+                "Введите необходимую команду. Для справки введите help. Для выхода введите exit.\r\n" +
+                "Не введена таблица.\r\n" +
+                "Введите необходимую команду. Для справки введите help. Для выхода введите exit.\r\n" +
+//                "\r\n" +
+                "Приходите еще =).\r\n", getData());
+    }
+
+    @Test
+    public void testExit() throws DriverLoadException, Exception, ConnectionFailedException {
+        // given
+        in.add("exit");
+
+        // when
+        Main.main(new String[0]);
+
+        // then
+        assertEquals("Приветствую в SQL-клиенте, написанном по программе обучения на Juja.\r\n" +
+                "Введите необходимую команду. Для справки введите help. Для выхода введите exit.\r\n" +
                 "Приходите еще =).\r\n", getData());
     }
 
