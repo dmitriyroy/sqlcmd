@@ -56,7 +56,7 @@ public class Controller {
                     dbConnector.mysqlConnect();
                     writer.write(DATABASE_CONNECTION_SUCCESS);
                 } catch (Exception e) {
-                    writer.write(iString.format(ERROR_CONNECT_DATABASE,"test_database",e.getMessage()));
+                    writer.write(String.format(ERROR_CONNECT_DATABASE,"test_database",e.getMessage()));
 //                    writer.write(String.format(ERROR_CONNECT_DATABASE,commandParams[0],e.getMessage()));
                 }
                 break;
