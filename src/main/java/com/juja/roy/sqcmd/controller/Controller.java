@@ -13,12 +13,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static java.lang.String.format;
+
 public class Controller {
 
+    private static final String ERROR_CONNECT_DATABASE = "Ошибка коннекта к базе данных $s по причине $s.";
+    private static final String DATABASE_CONNECTION_SUCCESS = "Database connection SUCCESS.";
+    private static final String ERROR_RUN_COMMAND = "Ошибка обращения к базе данных коммандой $s по причине $s.";
+    private static final String TABLE_NOT_INPUT = "Не введена таблица.";
+    private static final String UNKNOWN_COMMAND = "Неизвестная команда.";
     private static DBConnector dbConnector;
-    private static Statement prepareStatement;
-    private static ResultSet rs;
-    private static String sqlQuery;
+
     private static Collection<Collection<String>> tableData = new ArrayList<>();
     private final Writer writer;
 
@@ -26,8 +31,7 @@ public class Controller {
         this.writer = writer;
     }
 
-
-    public RunState run(String userCommand) throws DriverLoadException, ConnectionFailedException, Exception {
+    public RunState run(String userCommand) throws DriverLoadException, ConnectionFailedException {
         if(userCommand == null || userCommand.trim().equals("")){
             return RunState.EmptyCommand;
         }
@@ -45,11 +49,16 @@ public class Controller {
                 writer.write(new Help().getHelpInfo());
                 break;
             case "CONNECT":
+                try {
 //                dbConnector = new DBConnector("sqlcmd","root","");
-                dbConnector = new DBConnector("test_database","root","");
+                    dbConnector = new DBConnector("test_database","root","");
 //                dbConnector = new DBConnector(commandParams[0],commandParams[1],commandParams[2]);
-                dbConnector.mysqlConnect();
-                writer.write("Database connection SUCCESS.");
+                    dbConnector.mysqlConnect();
+                    writer.write(DATABASE_CONNECTION_SUCCESS);
+                } catch (Exception e) {
+                    writer.write(iString.format(ERROR_CONNECT_DATABASE,"test_database",e.getMessage()));
+//                    writer.write(String.format(ERROR_CONNECT_DATABASE,commandParams[0],e.getMessage()));
+                }
                 break;
             case "CREATE":
                 writer.write("Команда " + userCommand + " еще не реализована.");
@@ -64,11 +73,15 @@ public class Controller {
                 writer.write("Команда " + userCommand + " еще не реализована.");
                 break;
             case "FIND":
-                if(commandParams == null || commandParams.length == 0){
-                    writer.write("Не введена таблица.");
+                if(commandParams.length == 0){
+                    writer.write(TABLE_NOT_INPUT);
                     break;
                 }
-                writer.write(new Find(dbConnector,commandParams[0]).getTableData());
+                try {
+                    writer.write(new Find(dbConnector,commandParams[0]).getTableData());
+                } catch (SQLException e) {
+                    writer.write(format(ERROR_RUN_COMMAND,command,e.getMessage()));
+                }
                 break;
             case "INSERT":
                 writer.write("Команда " + userCommand + " еще не реализована.");
@@ -81,7 +94,7 @@ public class Controller {
                 break;
 
             default:
-                writer.write("Неизвестная команда.");
+                writer.write(UNKNOWN_COMMAND);
         }
 
         return RunState.Success;

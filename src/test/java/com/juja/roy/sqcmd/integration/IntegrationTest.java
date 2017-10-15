@@ -147,7 +147,7 @@ public class IntegrationTest {
     public void testFindWithTableName() throws DriverLoadException, Exception, ConnectionFailedException {
         // given
         in.add("connect");
-        in.add("find|user");
+        in.add("find|employee");
         in.add("exit");
 
         // when
@@ -158,9 +158,21 @@ public class IntegrationTest {
                 "Введите необходимую команду. Для справки введите help. Для выхода введите exit.\r\n" +
                 "Database connection SUCCESS.\r\n" +
                 "Введите необходимую команду. Для справки введите help. Для выхода введите exit.\r\n" +
-                "Не введена таблица.\r\n" +
+                "+--------+-------------+---------+--------+\n" +
+                "+ emp_id + emp_name    + dept_id + salary +\n" +
+                "+--------+-------------+---------+--------+\n" +
+                "+ 1      + Jojo        + 20      + 5000   +\n" +
+                "+ 2      + Popat Lal   + 30      + 15000  +\n" +
+                "+ 3      + Santa Singh + 40      + 25000  +\n" +
+                "+ 4      + Banta Singh + 20      + 7500   +\n" +
+                "+ 5      + Sohan Lal   + 20      + 15000  +\n" +
+                "+ 6      + Kk          + 10      + 12000  +\n" +
+                "+ 7      + Bob         + 20      + 35000  +\n" +
+                "+ 8      + John        + 30      + 25000  +\n" +
+                "+ 9      + Smith       + 40      + 5000   +\n" +
+                "+--------+-------------+---------+--------+\n" +
+                "\r\n" +
                 "Введите необходимую команду. Для справки введите help. Для выхода введите exit.\r\n" +
-//                "\r\n" +
                 "Приходите еще =).\r\n", getData());
     }
 

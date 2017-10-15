@@ -25,37 +25,28 @@ public class Find {
         tableData = new ArrayList<>();
     }
 
-    public List<String> getColumns(){
+    private List<String> getColumns() throws SQLException {
         List<String> tableColumns = new ArrayList<>();
-        try {
-            rs = dbConnector.getConnection().createStatement().executeQuery(sqlQueryColumns);
-            while(rs.next()) {
-                tableColumns.add(rs.getString(1));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        rs = dbConnector.getConnection().createStatement().executeQuery(sqlQueryColumns);
+        while(rs.next()) {
+            tableColumns.add(rs.getString(1));
         }
         return tableColumns;
     }
 
-    public Collection<Collection<String>> getTableData() {
+    public Collection<Collection<String>> getTableData() throws SQLException {
         this.columns = getColumns();
         tableData.add(this.columns);
 
-        try {
-            rs = dbConnector.getConnection().createStatement().executeQuery(sqlQueryTableData);
-            while(rs.next()) {
-                List<String> row = new ArrayList<>();
-                for(int i=0; i<this.columns.size(); i++) {
-                    row.add(rs.getString(this.columns.get(i)));
-                }
-                tableData.add(row);
+        rs = dbConnector.getConnection().createStatement().executeQuery(sqlQueryTableData);
+        while(rs.next()) {
+            List<String> row = new ArrayList<>();
+            for (String column : this.columns) {
+                row.add(rs.getString(column));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            tableData.add(row);
         }
 
         return tableData;
     }
-
 }
