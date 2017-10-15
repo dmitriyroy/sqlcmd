@@ -28,7 +28,7 @@ public class Controller {
 
 
     public RunState run(String userCommand) throws DriverLoadException, ConnectionFailedException, Exception {
-        if(userCommand == null){
+        if(userCommand == null || userCommand.trim().equals("")){
             return RunState.EmptyCommand;
         }
         if(userCommand.equalsIgnoreCase("exit")) {
@@ -66,6 +66,7 @@ public class Controller {
             case "FIND":
                 if(commandParams == null || commandParams.length == 0){
                     writer.write("Не введена таблица.");
+                    break;
                 }
                 writer.write(new Find(dbConnector,commandParams[0]).getTableData());
                 break;

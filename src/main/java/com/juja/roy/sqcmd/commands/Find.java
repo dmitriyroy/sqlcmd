@@ -44,13 +44,13 @@ public class Find {
 
         try {
             rs = dbConnector.getConnection().createStatement().executeQuery(sqlQueryTableData);
-            List<String> row = new ArrayList<>();
             while(rs.next()) {
+                List<String> row = new ArrayList<>();
                 for(int i=0; i<this.columns.size(); i++) {
                     row.add(rs.getString(this.columns.get(i)));
                 }
+                tableData.add(row);
             }
-            tableData.add(row);
         } catch (SQLException e) {
             e.printStackTrace();
         }
