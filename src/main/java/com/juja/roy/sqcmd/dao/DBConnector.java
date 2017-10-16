@@ -36,29 +36,27 @@ public class DBConnector {
         }
     }
 
-    public void mysqlConnect() throws DriverLoadException, ConnectionFailedException {
-        ////////////////////////////////////////////////////////////////////////////////////
-//        write("-------- MySQL JDBC Connection Testing ------------");
-
+    public void mysqlConnect() throws DriverLoadException, ConnectionFailedException, SQLException {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+//            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
-            throw new DriverLoadException("Where is your MySQL JDBC Driver?");
+//            throw new DriverLoadException("Where is your MySQL JDBC Driver?");
+            throw new DriverLoadException("Where is your PostgreSQL JDBC Driver?");
         }
 
-        try {
-            connection = DriverManager
+        connection = DriverManager
 //                    .getConnection("jdbc:mysql://localhost:3306/sqlcmd","root", "");
-                    .getConnection("jdbc:mysql://localhost:3306/" + this.database, this.username, this.password);
+//                .getConnection("jdbc:mysql://localhost:3306/" + this.database, this.username, this.password);
+                .getConnection("jdbc:postgresql://localhost:5432/" + this.database, this.username, this.password);
 
-        } catch (SQLException e) {
-            throw new ConnectionFailedException("Connection Failed! Check output console.");
-        }
+//        catch (SQLException e) {
+//            throw new ConnectionFailedException("Connection Failed! Check output console.");
+//        }
 
         if (connection == null) {
             throw new ConnectionFailedException("Failed to make connection!");
         }
-        /////////////////////////////////////////////////////////////
     }
 
     public Connection getConnection() {

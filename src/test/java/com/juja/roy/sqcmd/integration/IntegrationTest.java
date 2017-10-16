@@ -125,7 +125,7 @@ public class IntegrationTest {
     @Test
     public void testFindWithoutTableName() throws DriverLoadException, Exception, ConnectionFailedException {
         // given
-        in.add("connect");
+        in.add("connect|test_database|postgres|postgres");
         in.add("find");
         in.add("exit");
 
@@ -146,7 +146,7 @@ public class IntegrationTest {
     @Test
     public void testFindWithTableName() throws DriverLoadException, Exception, ConnectionFailedException {
         // given
-        in.add("connect");
+        in.add("connect|test_database|postgres|postgres");
         in.add("find|employee");
         in.add("exit");
 

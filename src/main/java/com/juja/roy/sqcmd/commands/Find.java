@@ -20,7 +20,10 @@ public class Find {
     public Find(DBConnector dbConnector, String table) {
         this.dbConnector = dbConnector;
         this.table = table;
-        sqlQueryColumns = "SHOW COLUMNS FROM " + table + " FROM " + dbConnector.getDatabase();
+        // MySQL
+//        sqlQueryColumns = "SHOW COLUMNS FROM " + table + " FROM " + dbConnector.getDatabase();
+        // PostgreSQL
+        sqlQueryColumns = "SELECT column_name FROM information_schema.columns WHERE table_name ='" + table + "' ";
         sqlQueryTableData = "SELECT * FROM " + table;
         tableData = new ArrayList<>();
     }

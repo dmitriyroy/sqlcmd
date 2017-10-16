@@ -17,9 +17,9 @@ import static java.lang.String.format;
 
 public class Controller {
 
-    private static final String ERROR_CONNECT_DATABASE = "Ошибка коннекта к базе данных $s по причине $s.";
+    private static final String ERROR_CONNECT_DATABASE = "Ошибка коннекта к базе данных %s по причине \"%s\".";
     private static final String DATABASE_CONNECTION_SUCCESS = "Database connection SUCCESS.";
-    private static final String ERROR_RUN_COMMAND = "Ошибка обращения к базе данных коммандой $s по причине $s.";
+    private static final String ERROR_RUN_COMMAND = "Ошибка обращения к базе данных коммандой %s по причине \"%s\".";
     private static final String TABLE_NOT_INPUT = "Не введена таблица.";
     private static final String UNKNOWN_COMMAND = "Неизвестная команда.";
     private static DBConnector dbConnector;
@@ -51,12 +51,12 @@ public class Controller {
             case "CONNECT":
                 try {
 //                dbConnector = new DBConnector("sqlcmd","root","");
-                    dbConnector = new DBConnector("test_database","root","");
-//                dbConnector = new DBConnector(commandParams[0],commandParams[1],commandParams[2]);
+//                    dbConnector = new DBConnector("test_database","root","");
+                dbConnector = new DBConnector(commandParams[0],commandParams[1],commandParams[2]);
                     dbConnector.mysqlConnect();
                     writer.write(DATABASE_CONNECTION_SUCCESS);
                 } catch (Exception e) {
-                    writer.write(String.format(ERROR_CONNECT_DATABASE,"test_database",e.getMessage()));
+                    writer.write(String.format(ERROR_CONNECT_DATABASE,commandParams[0],e.getMessage()));
 //                    writer.write(String.format(ERROR_CONNECT_DATABASE,commandParams[0],e.getMessage()));
                 }
                 break;
