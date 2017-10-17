@@ -177,6 +177,32 @@ public class IntegrationTest {
     }
 
     @Test
+    public void testTables() throws DriverLoadException, Exception, ConnectionFailedException {
+        // given
+        in.add("connect|test_database|postgres|postgres");
+        in.add("tables");
+        in.add("exit");
+
+        // when
+        Main.main(new String[0]);
+
+        // then
+        assertEquals("Приветствую в SQL-клиенте, написанном по программе обучения на Juja.\r\n" +
+                "Введите необходимую команду. Для справки введите help. Для выхода введите exit.\r\n" +
+                "Database connection SUCCESS.\r\n" +
+                "Введите необходимую команду. Для справки введите help. Для выхода введите exit.\r\n" +
+                "+----------+\n" +
+                "+ tables   +\n" +
+                "+----------+\n" +
+                "+ users    +\n" +
+                "+ employee +\n" +
+                "+----------+\n" +
+                "Введите необходимую команду. Для справки введите help. Для выхода введите exit.\r\n" +
+                "Приходите еще =).\r\n", getData());
+    }
+
+
+    @Test
     public void testExit() throws DriverLoadException, Exception, ConnectionFailedException {
         // given
         in.add("exit");

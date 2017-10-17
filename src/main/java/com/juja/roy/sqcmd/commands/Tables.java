@@ -23,16 +23,14 @@ public class Tables {
         tableList = new ArrayList<>();
     }
 
-    public List<String> getTables() {
-        try {
-            rs = dbConnector.getConnection().createStatement().executeQuery(sqlQuery);
-            tableList.add("tables");
-            while (rs.next()) {
-                tableList.add(rs.getString(1));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public List<String> getTables() throws SQLException {
+
+        rs = dbConnector.getConnection().createStatement().executeQuery(sqlQuery);
+        tableList.add("tables");
+        while (rs.next()) {
+            tableList.add(rs.getString(1));
         }
+
         return tableList;
     }
 
