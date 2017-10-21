@@ -63,6 +63,7 @@ public class DBConnectorTest {
             assertEquals("Ошибка подключения к базе test_database по причине \"0\".",
                     String.format("Ошибка подключения к базе test_database по причине \"%s\".", e.getErrorCode()));
 //                    String.format("Ошибка подключения к базе test_database по причине \"%s\".", new String(e.getMessage().getBytes(),"UTF-8")));
+//                    String.format("Ошибка подключения к базе test_database по причине \"%s\".", new String(e.getMessage().getBytes(),"CP1251")));
         }
     }
 }
