@@ -13,7 +13,6 @@ public class Find {
     private String sqlQueryColumns;
     private String sqlQueryTableData;
     private ResultSet rs;
-    private Collection<Collection<String>> tableData;
 
     public Find(DBConnector dbConnector, String table) {
         this.dbConnector = dbConnector;
@@ -22,7 +21,6 @@ public class Find {
         // PostgreSQL
         sqlQueryColumns = "SELECT column_name FROM information_schema.columns WHERE table_name ='" + table + "' ";
         sqlQueryTableData = "SELECT * FROM " + table;
-        tableData = new ArrayList<>();
     }
 
     private List<String> getColumns() throws SQLException {
@@ -36,8 +34,9 @@ public class Find {
 
     public Collection<Collection<String>> getTableData() throws SQLException {
         List<String> columns = getColumns();
-        tableData.add(columns);
+        Collection<Collection<String>> tableData  = new ArrayList<>();
 
+        tableData.add(columns);
         rs = dbConnector.getConnection().createStatement().executeQuery(sqlQueryTableData);
         while(rs.next()) {
             List<String> row = new ArrayList<>();
@@ -46,7 +45,6 @@ public class Find {
             }
             tableData.add(row);
         }
-
         return tableData;
     }
 }

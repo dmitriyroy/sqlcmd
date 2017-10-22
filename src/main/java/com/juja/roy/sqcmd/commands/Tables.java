@@ -11,7 +11,6 @@ public class Tables {
     private DBConnector dbConnector;
     private String sqlQuery;
     private ResultSet rs;
-    private List<String> tableList;
 
     public Tables(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
@@ -20,10 +19,10 @@ public class Tables {
                 "  FROM information_schema.tables " +
                 " WHERE table_type = 'BASE TABLE' " +
                 "   AND table_schema NOT IN ('pg_catalog', 'information_schema')";
-        tableList = new ArrayList<>();
     }
 
     public List<String> getTables() throws SQLException {
+        List<String> tableList = new ArrayList<>();
 
         rs = dbConnector.getConnection().createStatement().executeQuery(sqlQuery);
         tableList.add("tables");
