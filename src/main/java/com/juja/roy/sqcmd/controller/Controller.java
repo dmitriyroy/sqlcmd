@@ -6,33 +6,56 @@ import com.juja.roy.sqcmd.commands.Tables;
 import com.juja.roy.sqcmd.dao.DBConnector;
 import com.juja.roy.sqcmd.exception.ConnectionFailedException;
 import com.juja.roy.sqcmd.exception.DriverLoadException;
+import com.juja.roy.sqcmd.view.ConsoleReader;
+import com.juja.roy.sqcmd.view.ConsoleWriter;
+import com.juja.roy.sqcmd.view.Reader;
 import com.juja.roy.sqcmd.view.Writer;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 
 import static java.lang.String.format;
 
 public class Controller {
-
+    private static final String WELCOME_MASSAGE = "Приветствую в SQL-клиенте, написанном по программе обучения на Juja.";
+    private static final String REQUEST_COMMAND = "Введите необходимую команду. Для справки введите help. Для выхода " +
+            "введите exit.";
+    private static final String BY_MESSAGE = "Приходите еще =).";
     private static final String ERROR_CONNECT_DATABASE = "Ошибка коннекта к базе данных %s по причине \"%s\".";
     private static final String DATABASE_CONNECTION_SUCCESS = "Database connection SUCCESS.";
     private static final String ERROR_RUN_COMMAND = "Ошибка обращения к базе данных коммандой %s по причине \"%s\".";
     private static final String TABLE_NOT_INPUT = "Не введена таблица.";
     private static final String UNKNOWN_COMMAND = "Неизвестная команда.";
-    private static final String NEED_CONNECT = "Вам необходимо подключиться к базе. Формат команды: connect | database | username | password";
+    private static final String NEED_CONNECT = "Вам необходимо подключиться к базе." +
+                                               "Формат команды: connect|database|username|password";
     private static DBConnector dbConnector;
 
-    private static Collection<Collection<String>> tableData = new ArrayList<>();
-    private final Writer writer;
+    private final Writer writer = new ConsoleWriter();
+    private final Reader reader = new ConsoleReader();
 
-    public Controller(Writer writer) {
-        this.writer = writer;
+    public void run(){
+        RunState runState = null;
+        writer.write(WELCOME_MASSAGE);
+        int extraExit = 0;
+        while(true) {
+            do {
+                writer.write(REQUEST_COMMAND);
+                runState = iterate(reader.read());
+            } while (runState.toString().equals("EmptyCommand"));
+
+            if(runState != null){
+                if(runState.equals(RunState.Exit)) {
+                    break;
+                }
+            }
+            if(extraExit++ > 5){
+                break;
+            }
+        }
+        writer.write(BY_MESSAGE);
     }
 
-    public RunState run(String userCommand) throws DriverLoadException, ConnectionFailedException {
+    public RunState iterate(String userCommand) {
         if(userCommand == null || userCommand.trim().equals("")){
             return RunState.EmptyCommand;
         }
@@ -51,12 +74,14 @@ public class Controller {
                 break;
             case "CONNECT":
                 try {
-//                dbConnector = new DBConnector("sqlcmd","root","");
+//                    dbConnector = new DBConnector("sqlcmd","root","");
 //                    dbConnector = new DBConnector("test_database","root","");
                     dbConnector = new DBConnector(commandParams[0],commandParams[1],commandParams[2]);
                     dbConnector.mysqlConnect();
                     writer.write(DATABASE_CONNECTION_SUCCESS);
-                } catch (Exception e) {
+                } catch (Exception | ConnectionFailedException e) {
+                    writer.write(String.format(ERROR_CONNECT_DATABASE,commandParams[0],e.getMessage()));
+                } catch (DriverLoadException e) {
                     writer.write(String.format(ERROR_CONNECT_DATABASE,commandParams[0],e.getMessage()));
                 }
                 break;
