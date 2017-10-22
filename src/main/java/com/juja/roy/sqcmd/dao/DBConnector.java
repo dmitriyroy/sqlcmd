@@ -27,12 +27,7 @@ public class DBConnector {
             throw new Exception("Невалидное имя пользователя");
         }
         if(password == null){
-            this.password = "";
-//            try {
-//                throw new Exception("Невалидный пароль");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+            throw new Exception("Невалидный пароль");
         }
     }
 
