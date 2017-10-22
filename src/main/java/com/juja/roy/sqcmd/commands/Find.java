@@ -13,13 +13,10 @@ public class Find {
     private String sqlQueryColumns;
     private String sqlQueryTableData;
     private ResultSet rs;
-    private String table;
-    private List<String> columns;
     private Collection<Collection<String>> tableData;
 
     public Find(DBConnector dbConnector, String table) {
         this.dbConnector = dbConnector;
-        this.table = table;
         // MySQL
 //        sqlQueryColumns = "SHOW COLUMNS FROM " + table + " FROM " + dbConnector.getDatabase();
         // PostgreSQL
@@ -38,18 +35,15 @@ public class Find {
     }
 
     public Collection<Collection<String>> getTableData() throws SQLException {
-        this.columns = getColumns();
-        tableData.add(this.columns);
-
+        tableData.add(getColumns());
         rs = dbConnector.getConnection().createStatement().executeQuery(sqlQueryTableData);
         while(rs.next()) {
             List<String> row = new ArrayList<>();
-            for (String column : this.columns) {
+            for (String column : getColumns()) {
                 row.add(rs.getString(column));
             }
             tableData.add(row);
         }
-
         return tableData;
     }
 }

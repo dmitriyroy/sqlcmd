@@ -17,15 +17,15 @@ import java.util.Arrays;
 import static java.lang.String.format;
 
 public class Controller {
-    private static final String WELCOME_MASSAGE = "Приветствую в SQL-клиенте, написанном по программе обучения на Juja.";
-    private static final String REQUEST_COMMAND = "Введите необходимую команду. Для справки введите help. Для выхода введите exit.";
-    private static final String BY_MESSAGE = "Приходите еще =).";
-    private static final String ERROR_CONNECT_DATABASE = "Ошибка коннекта к базе данных %s по причине \"%s\".";
-    private static final String DATABASE_CONNECTION_SUCCESS = "Database connection SUCCESS.";
-    private static final String ERROR_RUN_COMMAND = "Ошибка обращения к базе данных коммандой %s по причине \"%s\".";
-    private static final String TABLE_NOT_INPUT = "Не введена таблица.";
-    private static final String UNKNOWN_COMMAND = "Неизвестная команда.";
-    private static final String NEED_CONNECT = "Вам необходимо подключиться к базе. Формат команды: connect|database|username|password";
+    private final String WELCOME_MASSAGE = "Приветствую в SQL-клиенте, написанном по программе обучения на Juja.";
+    private final String REQUEST_COMMAND = "Введите необходимую команду. Для справки введите help. Для выхода введите exit.";
+    private final String BY_MESSAGE = "Приходите еще =).";
+    private final String ERROR_CONNECT_DATABASE = "Ошибка коннекта к базе данных %s по причине \"%s\".";
+    private final String DATABASE_CONNECTION_SUCCESS = "Database connection SUCCESS.";
+    private final String ERROR_RUN_COMMAND = "Ошибка обращения к базе данных коммандой %s по причине \"%s\".";
+    private final String TABLE_NOT_INPUT = "Не введена таблица.";
+    private final String UNKNOWN_COMMAND = "Неизвестная команда.";
+    private final String NEED_CONNECT = "Вам необходимо подключиться к базе. Формат команды: connect|database|username|password";
 
     private DBConnector dbConnector;
     private final Writer writer = new ConsoleWriter();
