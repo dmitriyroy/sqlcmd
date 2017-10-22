@@ -26,8 +26,8 @@ public class Controller {
     private static final String TABLE_NOT_INPUT = "Не введена таблица.";
     private static final String UNKNOWN_COMMAND = "Неизвестная команда.";
     private static final String NEED_CONNECT = "Вам необходимо подключиться к базе. Формат команды: connect|database|username|password";
-    private static DBConnector dbConnector;
 
+    private static DBConnector dbConnector;
     private final Writer writer = new ConsoleWriter();
     private final Reader reader = new ConsoleReader();
 
