@@ -35,15 +35,18 @@ public class Find {
     }
 
     public Collection<Collection<String>> getTableData() throws SQLException {
-        tableData.add(getColumns());
+        List<String> columns = getColumns();
+        tableData.add(columns);
+
         rs = dbConnector.getConnection().createStatement().executeQuery(sqlQueryTableData);
         while(rs.next()) {
             List<String> row = new ArrayList<>();
-            for (String column : getColumns()) {
+            for (String column : columns) {
                 row.add(rs.getString(column));
             }
             tableData.add(row);
         }
+
         return tableData;
     }
 }
