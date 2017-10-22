@@ -31,7 +31,7 @@ public class Find {
     private List<String> getColumns() throws SQLException {
         List<String> tableColumns = new ArrayList<>();
         rs = dbConnector.getConnection().createStatement().executeQuery(sqlQueryColumns);
-        while(rs.next()) {
+        while (rs.next()) {
             tableColumns.add(rs.getString(1));
         }
         return tableColumns;

@@ -5,7 +5,11 @@ import com.juja.roy.sqcmd.exception.DriverLoadException;
 import com.juja.roy.sqcmd.view.ConsoleWriter;
 import com.juja.roy.sqcmd.view.Writer;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+
 public class DBConnector {
 
     private Connection connection;
@@ -20,13 +24,13 @@ public class DBConnector {
         this.database = database;
         this.username = username;
         this.password = password;
-        if(database == null){
+        if (database == null) {
             throw new Exception("Невалидное имя базы данных");
         }
-        if(username == null){
+        if (username == null) {
             throw new Exception("Невалидное имя пользователя");
         }
-        if(password == null){
+        if (password == null) {
             throw new Exception("Невалидный пароль");
         }
     }
